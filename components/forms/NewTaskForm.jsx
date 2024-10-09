@@ -8,6 +8,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { postAPI } from "@/services/fetchAPI";
 
 const validationSchema = yup.object({
   title: yup
@@ -32,7 +33,13 @@ export const NewTaskForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      postAPI("/tasks", values).then((res) => {
+        if (res.status && (res.status === 200 || res.status === "success")) {
+          console.log(res.status);
+        } else {
+          console.log(res.status);
+        }
+      });
     },
   });
 

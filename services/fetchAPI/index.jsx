@@ -1,4 +1,4 @@
-// Öğrenci (kayıt) işlemleri için kullanılan servis
+// Task işlemleri için kullanılan servis
 const postAPI = async (
   URL,
   body,
@@ -9,6 +9,7 @@ const postAPI = async (
     if (!process.env.NEXT_PUBLIC_API_URL || !URL) {
       throw new Error("URL bulunamadı!");
     }
+
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL + URL}`, {
       method: method,
       headers: headers,
@@ -33,7 +34,7 @@ const postAPI = async (
   }
 };
 
-// Öğrenci (kayıt) işlemleri için kullanılan servis
+// Task işlemleri için kullanılan servis
 const getAPI = async (
   URL,
   headers = { "Content-Type": "application/json" }

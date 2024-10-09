@@ -5,7 +5,7 @@ export const TaskCard = ({ task }) => {
   return (
     <Link className="h-fit" href={`/dashboard/${task.id}`}>
       <div
-        className={`px-3 py-4 flex flex-col justify-center bg-opacity-20 gap-2 transition-all duration-300 ease-in-out hover:scale-105 shadow-md max-h-fit max-w-80 rounded border-l-8 ${
+        className={`px-3 py-4 flex flex-col justify-center bg-opacity-20 gap-2 transition-all duration-300 ease-in-out hover:scale-105 shadow-md max-h-fit w-full rounded border-l-8 ${
           task.priority === "casual"
             ? "bg-casual border-casual"
             : task.priority === "moderate"

@@ -8,6 +8,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { postAPI } from "@/services/fetchAPI";
 
 const validationSchema = yup.object({
   title: yup
@@ -31,13 +32,13 @@ export const UpdateTaskForm = ({ id }) => {
   });
 
   useEffect(() => {
-    const data = {
-      title: "Task Title",
-      priority: "casual",
-      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
-      id: "asdasd",
-    };
-    setTask(data);
+    postAPI("/tasks", id).then((res) => {
+      if (res.status && (res.status === 200 || res.status === "success")) {
+        console.log("if", res);
+      } else {
+        setTask(res);
+      }
+    });
   }, []);
 
   const formik = useFormik({
@@ -49,7 +50,16 @@ export const UpdateTaskForm = ({ id }) => {
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      const updatedTask = { ...values, id: id };
+      console.log(updatedTask);
+
+      postAPI("/tasks", updatedTask, "PUT").then((res) => {
+        if (res.status && (res.status === 200 || res.status === "success")) {
+          console.log(res);
+        } else {
+          console.log(res);
+        }
+      });
     },
   });
 

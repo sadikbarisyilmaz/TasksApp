@@ -2,38 +2,21 @@
 import { useEffect, useState } from "react";
 import { TaskColumn } from "./TaskColumn";
 import { Divider } from "@mui/material";
+import { getAPI } from "@/services/fetchAPI";
+import { categorizeByPriority } from "@/functions/categorizeByPriority";
 
 export const TaskTable = () => {
-  const [tasks, setTasks] = useState({});
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const data = {
-      casual: [
-        {
-          title: "Task Title",
-          priority: "casual",
-          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
-          id: "asdasd",
-        },
-      ],
-      moderate: [
-        {
-          title: "Task Title",
-          priority: "moderate",
-          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
-          id: "asdasd",
-        },
-      ],
-      urgent: [
-        {
-          title: "Task Title",
-          priority: "urgent",
-          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
-          id: "asdasd",
-        },
-      ],
-    };
-    setTasks({ ...data });
+    getAPI("/tasks").then((res) => {
+      if (res.status && (res.status === 200 || res.status === "success")) {
+        console.log("if", res);
+      } else {
+        const categorizedTasks = categorizeByPriority(res);
+        setTasks(categorizedTasks);
+      }
+    });
   }, []);
 
   return (
