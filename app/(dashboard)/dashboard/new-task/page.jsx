@@ -5,7 +5,9 @@ export default function Page() {
   return (
     <div className="flex flex-col items-center w-full min-h-screen">
       <Banner title="Create New Task" />
-      <NewTaskForm />
+      <div className="flex w-full h-full bg-secondary-background justify-center items-center shadow-inner p-4">
+        <NewTaskForm />
+      </div>
     </div>
   );
 }

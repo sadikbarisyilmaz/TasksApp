@@ -14,7 +14,6 @@ generator client {
 
 model Task {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  slug     String @unique
   title    String
   body     String
   priority String
