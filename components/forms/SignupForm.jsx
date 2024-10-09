@@ -9,7 +9,7 @@ import { postAPI } from "@/services/fetchAPI";
 const validationSchema = yup.object({
   fullname: yup
     .string("Enter your full name")
-    .min(8, "Full name should be of minimum 3 characters length")
+    .min(3, "Full name should be of minimum 3 characters length")
     .required("Full name is required"),
   email: yup
     .string("Enter your email")

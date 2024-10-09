@@ -1,7 +1,9 @@
 // import { NextApiRequest, NextApiResponse } from 'next';
 // import authOptions from "@/pages/api/auth/[...nextauth]";
 // import { getServerSession } from "next-auth/next";
+import { hashPassword } from "@/functions/hashPassword";
 import { createNewData, deleteDataByAny, getAllData, getDataByUnique, updateDataByAny } from "@/services/serviceOperations";
+import bcrypt from "bcrypt";
 
 const handler = async (req, res) => {
     const requestMethod = req.method;
@@ -41,14 +43,20 @@ const handler = async (req, res) => {
         case "POST":
             try {
                 const body = await req.body;
-                console.log(body);
 
                 if (!body) {
                     throw new Error("Bir hata oluştu!");
                 }
-                // Request body'nin id olup olmadığını kontrol eder
+                // Request body'nin email olup olmadığını kontrol eder
                 if (typeof body !== "string") {
-                    const data = await createNewData("User", body);
+                    const hashedPassword = await hashPassword(body.hashedPassword)
+                    const newUser = {
+                        hashedPassword: hashedPassword,
+                        email: body.email,
+                        fullname: body.fullname,
+                        email: body.email,
+                    }
+                    const data = await createNewData("User", newUser);
                     if (!data || data.error) {
                         throw new Error(data.error);
                     }
@@ -57,7 +65,7 @@ const handler = async (req, res) => {
 
                 try {
                     const data = await getDataByUnique("User", {
-                        id: body,
+                        email: body,
                     });
                     return res.status(200).json(data);
                 } catch (error) {

@@ -2,6 +2,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import localFont from "next/font/local";
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import SessionProvider from "@/providers/SessionProvider";
 
 const roboto = Roboto({
   weight: ["500", "400", "300"],
@@ -17,7 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+        <SessionProvider>
+          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>{" "}
+        </SessionProvider>
       </body>
     </html>
   );

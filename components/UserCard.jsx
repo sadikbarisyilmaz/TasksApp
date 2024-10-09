@@ -1,5 +1,6 @@
+"use client";
 import { Avatar, Button } from "@mui/material";
-import React from "react";
+import { signOut } from "next-auth/react";
 
 export const UserCard = () => {
   return (
@@ -10,7 +11,12 @@ export const UserCard = () => {
         </Avatar>
         <div className="flex flex-col mt-1 leading-tight">
           <h3 className="flex font-normal">Test User</h3>
-          <button className="text-sm text-left font-light">Logout</button>
+          <button
+            onClick={signOut}
+            className="text-sm text-left font-light hover:text-casual transition-all duration-200"
+          >
+            Logout
+          </button>
         </div>
       </div>
       {/* <Button variant="outlined" size="small">
