@@ -8,10 +8,6 @@ const links = [
     title: "New Task",
     href: "/dashboard/new-task",
   },
-  {
-    title: "Home",
-    href: "/",
-  },
 ];
 
 export const NavMenu = () => {

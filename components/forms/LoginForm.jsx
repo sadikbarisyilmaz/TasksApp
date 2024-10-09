@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, Divider, TextField } from "@mui/material";
 import Link from "next/link";
+import { handleLogin } from "@/functions/handleLogin";
+import { useRouter } from "next/navigation";
 
 const validationSchema = yup.object({
   email: yup
@@ -17,6 +19,7 @@ const validationSchema = yup.object({
 });
 
 export const LoginForm = () => {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -24,7 +27,11 @@ export const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      const { email, password } = values;
+      handleLogin(email, password);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 800);
     },
   });
   return (
