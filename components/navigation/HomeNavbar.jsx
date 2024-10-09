@@ -11,13 +11,13 @@ export const HomeNavbar = () => {
         </Link>
         <div className="justify-end items-center gap-8 flex">
           <Link
-            className={`w-fit transition-all duration-100  hover:text-casual hover:drop-shadow-lg drop-shadow-lg`}
+            className={`w-fit transition-all duration-200 hover:text-casual hover:drop-shadow-lg drop-shadow-lg`}
             href="/login"
           >
             Login
           </Link>
           <Link
-            className={`w-fit transition-all duration-100  hover:text-casual hover:drop-shadow-lg drop-shadow-lg`}
+            className={`w-fit transition-all duration-200  hover:text-casual hover:drop-shadow-lg drop-shadow-lg`}
             href="/signup"
           >
             Signup

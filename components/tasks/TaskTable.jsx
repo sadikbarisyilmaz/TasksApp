@@ -12,8 +12,7 @@ export const TaskTable = () => {
         {
           title: "Task Title",
           priority: "casual",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
+          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
           id: "asdasd",
         },
       ],
@@ -21,8 +20,7 @@ export const TaskTable = () => {
         {
           title: "Task Title",
           priority: "moderate",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
+          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
           id: "asdasd",
         },
       ],
@@ -30,8 +28,7 @@ export const TaskTable = () => {
         {
           title: "Task Title",
           priority: "urgent",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
+          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
           id: "asdasd",
         },
       ],

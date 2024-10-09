@@ -1,3 +1,4 @@
+import prisma from "@/lib/prisma";
 import Link from "next/link";
 
 export default function Home() {
@@ -13,7 +14,10 @@ export default function Home() {
           </h2>
           <p className="leading-7 mt-10  font-light">
             Please{" "}
-            <Link className=" font-normal" href={"/login"}>
+            <Link
+              className="transition-all duration-200 hover:text-casual font-normal"
+              href={"/login"}
+            >
               Login
             </Link>{" "}
             to continue <Link href={"/dashboard"}>Dashboard</Link>

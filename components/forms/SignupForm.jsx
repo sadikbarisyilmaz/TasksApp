@@ -3,8 +3,13 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, Divider, TextField } from "@mui/material";
+import Link from "next/link";
 
 const validationSchema = yup.object({
+  fullname: yup
+    .string("Enter your full name")
+    .min(8, "Full name should be of minimum 3 characters length")
+    .required("Full name is required"),
   email: yup
     .string("Enter your email")
     .email("Enter a valid email")
@@ -22,21 +27,33 @@ const validationSchema = yup.object({
 export const SignupForm = () => {
   const formik = useFormik({
     initialValues: {
+      fullname: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const credentials = { email: values.email, password: values.password };
+      const { confirmPassword, ...credentials } = values;
       console.log(credentials);
     },
   });
   return (
-    <div className="flex flex-col gap-4 w-full max-w-xl p-10 shadow-2xl bg-white rounded">
-      <h2 className="text-5xl">Signup</h2>
+    <div className="flex flex-col gap-4 w-full max-w-xl p-6 sm:p-10 shadow-2xl bg-white rounded">
+      <h2 className=" text-3xl sm:text-5xl">Signup</h2>
       <Divider />
       <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
+        <TextField
+          fullWidth
+          id="fullname"
+          name="fullname"
+          label="Full Name"
+          value={formik.values.fullname}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.fullname && Boolean(formik.errors.fullname)}
+          helperText={formik.touched.fullname && formik.errors.fullname}
+        />
         <TextField
           fullWidth
           id="email"
@@ -81,6 +98,16 @@ export const SignupForm = () => {
           Submit
         </Button>
       </form>
+      <p className="text-sm text-end">
+        Already have an account ?{" "}
+        <Link
+          className="transition-all duration-200 text-casual "
+          href={"/login"}
+        >
+          Login
+        </Link>{" "}
+        here!{" "}
+      </p>
     </div>
   );
 };

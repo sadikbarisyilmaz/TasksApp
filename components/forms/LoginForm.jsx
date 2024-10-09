@@ -3,6 +3,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, Divider, TextField } from "@mui/material";
+import Link from "next/link";
 
 const validationSchema = yup.object({
   email: yup
@@ -27,8 +28,8 @@ export const LoginForm = () => {
     },
   });
   return (
-    <div className="flex flex-col gap-4 w-full max-w-xl p-10 shadow-2xl bg-white rounded">
-      <h2 className="text-5xl">Login</h2>
+    <div className="flex flex-col gap-4 w-full max-w-xl p-6 sm:p-10 shadow-2xl bg-white rounded">
+      <h2 className=" text-3xl sm:text-5xl">Login</h2>
       <Divider />
       <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
         <TextField
@@ -58,6 +59,16 @@ export const LoginForm = () => {
           Submit
         </Button>
       </form>
+      <p className="text-sm text-end">
+        Don't have an account ?{" "}
+        <Link
+          className="transition-all duration-200 text-casual "
+          href={"/signup"}
+        >
+          Signup
+        </Link>{" "}
+        here!{" "}
+      </p>
     </div>
   );
 };
