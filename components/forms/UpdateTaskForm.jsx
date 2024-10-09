@@ -64,7 +64,7 @@ export const UpdateTaskForm = ({ id }) => {
   });
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-4 w-full max-w-4xl">
       <h2 className=" text-lg sm:text-2xl">Update Task</h2>
       <Divider />
       <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>

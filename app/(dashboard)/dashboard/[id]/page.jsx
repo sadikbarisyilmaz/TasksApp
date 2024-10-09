@@ -21,7 +21,12 @@ export default function Page({ params }) {
       <Banner title="Task Settings" />
       <div className="flex flex-col w-full h-full bg-secondary-background shadow-inner  p-10 sm:p-14 gap-4">
         <UpdateTaskForm id={id} />
-        <Button onClick={handleDelete} color="error" variant="contained">
+        <Button
+          className="max-w-4xl w-full"
+          onClick={handleDelete}
+          color="error"
+          variant="contained"
+        >
           Delete Task
         </Button>
       </div>

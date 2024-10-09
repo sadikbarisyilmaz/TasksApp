@@ -44,7 +44,7 @@ export const NewTaskForm = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4 w-full p-6 sm:p-10">
+    <div className="flex flex-col gap-4 w-full max-w-4xl p-6 sm:p-10">
       <h2 className=" text-lg sm:text-2xl">New Task</h2>
       <Divider />
       <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
