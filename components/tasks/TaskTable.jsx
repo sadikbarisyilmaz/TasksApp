@@ -37,12 +37,12 @@ export const TaskTable = () => {
   }, []);
 
   return (
-    <div className="w-full h-full p-4 lg:p-8 bg-secondary-background shadow-inner flex justify-center">
-      <div className="w-full h-full flex justify-between gap-2 max-w-7xl">
+    <div className="w-full h-full p-4 lg:p-8 bg-secondary-background shadow-inner flex justify-center overflow-y-scroll">
+      <div className="w-full h-full flex justify-center sm:justify-between gap-2 max-w-7xl flex-wrap sm:flex-nowrap">
         <TaskColumn title="Casual" tasks={tasks.casual} />
-        <Divider orientation="vertical" flexItem />
+        <Divider className="hidden sm:flex" orientation="vertical" flexItem />
         <TaskColumn title="Moderate" tasks={tasks.moderate} />
-        <Divider orientation="vertical" flexItem />
+        <Divider className="hidden sm:flex" orientation="vertical" flexItem />
         <TaskColumn title="Urgent" tasks={tasks.urgent} />
       </div>
     </div>

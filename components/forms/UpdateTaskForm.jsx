@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, Divider, TextField } from "@mui/material";
@@ -23,13 +23,30 @@ const validationSchema = yup.object({
   priority: yup.string(),
 });
 
-export const NewTaskForm = () => {
+export const UpdateTaskForm = ({ id }) => {
+  const [task, setTask] = useState({
+    title: "",
+    priority: "casual",
+    body: "",
+  });
+
+  useEffect(() => {
+    const data = {
+      title: "Task Title",
+      priority: "casual",
+      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, cupiditate.",
+      id: "asdasd",
+    };
+    setTask(data);
+  }, []);
+
   const formik = useFormik({
     initialValues: {
-      title: "",
-      body: "",
-      priority: "casual",
+      title: task.title,
+      body: task.body,
+      priority: task.priority,
     },
+    enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
@@ -37,32 +54,39 @@ export const NewTaskForm = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4 w-full p-6 sm:p-10">
-      <h2 className=" text-lg sm:text-2xl">New Task</h2>
+    <div className="flex flex-col gap-4 w-full">
+      <h2 className=" text-lg sm:text-2xl">Update Task</h2>
       <Divider />
       <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
-        <TextField
-          fullWidth
-          id="title"
-          name="title"
-          label="Title"
-          value={formik.values.title}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.title && Boolean(formik.errors.title)}
-          helperText={formik.touched.title && formik.errors.title}
-        />
-        <TextField
-          fullWidth
-          id="body"
-          name="body"
-          label="Task Body"
-          value={formik.values.body}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.body && Boolean(formik.errors.body)}
-          helperText={formik.touched.body && formik.errors.body}
-        />
+        <div>
+          <FormLabel>Task Title</FormLabel>
+          <TextField
+            fullWidth
+            id="title"
+            name="title"
+            // label="Title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
+          />
+        </div>
+        <div>
+          <FormLabel>Task Body</FormLabel>
+          <TextField
+            fullWidth
+            id="body"
+            name="body"
+            // label="Task Body"
+            value={formik.values.body}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.body && Boolean(formik.errors.body)}
+            helperText={formik.touched.body && formik.errors.body}
+          />
+        </div>
+
         <FormControl>
           <FormLabel id="priority-label">Priority</FormLabel>
           <RadioGroup
