@@ -6,4 +6,5 @@ export const handleLogin = async (email, password) => {
         email,
         password,
     });
+    return result
 }

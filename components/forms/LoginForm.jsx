@@ -26,14 +26,17 @@ export const LoginForm = () => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const { email, password } = values;
-      handleLogin(email, password);
-      setTimeout(() => {
+      const result = await handleLogin(email, password);
+      if (result.error === null) {
         router.push("/dashboard");
-      }, 800);
+      } else {
+        console.log(result.error);
+      }
     },
   });
+
   return (
     <div className="flex flex-col gap-4 w-full max-w-xl p-6 sm:p-10 shadow-2xl bg-white rounded">
       <h2 className=" text-3xl sm:text-5xl">Login</h2>
