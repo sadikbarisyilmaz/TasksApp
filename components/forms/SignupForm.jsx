@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, Divider, TextField } from "@mui/material";
 import Link from "next/link";
+import { postAPI } from "@/services/fetchAPI";
 
 const validationSchema = yup.object({
   fullname: yup
@@ -34,8 +35,18 @@ export const SignupForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const { confirmPassword, ...credentials } = values;
-      console.log(credentials);
+      const credentials = {
+        email: values.email,
+        hashedPassword: values.password,
+        fullname: values.fullname,
+      };
+      postAPI("/users", credentials).then((res) => {
+        if (res.status && (res.status === 200 || res.status === "success")) {
+          console.log(res.status);
+        } else {
+          console.log(res.status);
+        }
+      });
     },
   });
   return (
