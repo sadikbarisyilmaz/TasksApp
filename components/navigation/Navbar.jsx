@@ -1,6 +1,6 @@
-import { NavMenu } from "./NavMenu";
-import { UserCard } from "./UserCard";
 import Divider from "@mui/material/Divider";
+import { UserCard } from "../UserCard";
+import { NavMenu } from "./NavMenu";
 
 export const Navbar = () => {
   return (
