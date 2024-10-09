@@ -60,7 +60,7 @@ export const LoginForm = () => {
         </Button>
       </form>
       <p className="text-sm text-end">
-        Don't have an account ?{" "}
+        Don&apos;t have an account ?{" "}
         <Link
           className="transition-all duration-200 text-casual "
           href={"/signup"}

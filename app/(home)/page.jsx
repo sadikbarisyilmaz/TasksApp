@@ -10,7 +10,7 @@ export default function Home() {
             Welcome to TasksApp !
           </h1>
           <h2 className="leading-1 text-md max-w-md  md:text-lg lg:text-xl font-light">
-            "Your Trusty Task Manager"
+            &quot;Your Trusty Task Manager&quot;
           </h2>
           <p className="leading-7 mt-10  font-light">
             Please{" "}
