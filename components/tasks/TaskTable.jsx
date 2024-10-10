@@ -11,7 +11,7 @@ export const TaskTable = () => {
   useEffect(() => {
     getAPI("/tasks").then((res) => {
       if (res.status && (res.status === 200 || res.status === "success")) {
-        console.log("if", res);
+        console.log(res);
       } else {
         const categorizedTasks = categorizeByPriority(res);
         setTasks(categorizedTasks);

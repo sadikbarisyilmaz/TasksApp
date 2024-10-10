@@ -9,6 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { postAPI } from "@/services/fetchAPI";
+import { useSession } from "next-auth/react";
 
 const validationSchema = yup.object({
   title: yup
@@ -25,6 +26,9 @@ const validationSchema = yup.object({
 });
 
 export const NewTaskForm = () => {
+  const { data: session, status } = useSession();
+  const userId = session?.user.id;
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -33,11 +37,17 @@ export const NewTaskForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      postAPI("/tasks", values).then((res) => {
+      const newTask = {
+        ...values,
+        user: {
+          connect: { id: userId },
+        },
+      };
+      postAPI("/tasks", newTask).then((res) => {
         if (res.status && (res.status === 200 || res.status === "success")) {
-          console.log(res.status);
+          console.log(res);
         } else {
-          console.log(res.status);
+          console.log(res);
         }
       });
     },

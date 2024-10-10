@@ -1,21 +1,27 @@
-// import { NextApiRequest, NextApiResponse } from 'next';
-// import authOptions from "@/pages/api/auth/[...nextauth]";
-// import { getServerSession } from "next-auth/next";
-import { createNewData, deleteDataByAny, getAllData, getDataByUnique, updateDataByAny } from "@/services/serviceOperations";
+import { createNewData, deleteDataByAny, getDataByMany, getDataByUnique, updateDataByAny } from "@/services/serviceOperations";
+import { getServerSession } from "next-auth"
+import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (req, res) => {
+    const session = await getServerSession(req, res, authOptions)
+    const userId = session.user.id
     const requestMethod = req.method;
     const data = req.body;
-    // const session = await getServerSession(req, res, authOptions)
+    console.log(userId);
 
-    // if (!session) {
-    //     return res.status(500).json({ status: "error", error: "Oturum açmanız gerekiyor!" });
-    // }
+
+    if (!session) {
+        return res.status(500).json({ status: "error", error: "Oturum açmanız gerekiyor!" });
+    }
 
     switch (requestMethod) {
         case "GET":
             try {
-                const data = await getAllData("Task");
+                const data = await getDataByMany("Task", {
+                    user: {
+                        id: userId,
+                    }
+                });
                 return res.status(200).json(data);
             } catch (error) {
                 return res.status(500).json({ error: error.message });
