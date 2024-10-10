@@ -31,20 +31,25 @@ export const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      // Submit butonunu disabled getirir
       setIsSubmitting(true);
       const { email, password } = values;
       const res = await handleLogin(email, password);
       if (res.error === null) {
-        setOpen(true);
-        setIsSubmitting(false);
+        // Sanckbarı aktive eder
         setMessage("Login successfull !");
+        setOpen(true);
+        // Submit butonunu eski haline getirir
+        setIsSubmitting(false);
         setTimeout(() => {
           router.push("/dashboard");
         }, 500);
       } else {
-        setIsSubmitting(false);
+        // Sanckbarı aktive eder
         setMessage(res.error);
         setOpen(true);
+        // Submit butonunu eski haline getirir
+        setIsSubmitting(false);
       }
     },
   });

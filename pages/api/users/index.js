@@ -34,11 +34,9 @@ const handler = async (req, res) => {
         case "POST":
             try {
                 const body = await req.body;
-
                 if (!body) {
                     throw new Error("Bir hata oluştu!");
                 }
-
                 // Request body'nin email olup olmadığını kontrol eder
                 if (typeof body !== "string") {
                     const hashedPassword = await hashPassword(body.hashedPassword)

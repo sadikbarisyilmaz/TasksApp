@@ -57,13 +57,13 @@ export const UpdateTaskForm = ({ id }) => {
 
       postAPI("/tasks", updatedTask, "PUT").then((res) => {
         if (res.status && (res.status === 200 || res.status === "success")) {
-          console.log(res);
+          // Sanckbarı aktive eder
           setMessage(res);
           setOpen(true);
         } else {
+          // Sanckbarı aktive eder
           setMessage("Task updated created successfully !");
           setOpen(true);
-          console.log(res);
         }
       });
     },

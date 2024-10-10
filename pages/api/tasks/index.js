@@ -7,9 +7,8 @@ const handler = async (req, res) => {
     const userId = session.user.id
     const requestMethod = req.method;
     const data = req.body;
-    console.log(userId);
 
-
+    // Oturumu kontrol eder
     if (!session) {
         return res.status(500).json({ status: "error", error: "Oturum açmanız gerekiyor!" });
     }
@@ -17,6 +16,7 @@ const handler = async (req, res) => {
     switch (requestMethod) {
         case "GET":
             try {
+                // Sessiondaki userın tüm taskları için database'e userId ile query yapar
                 const data = await getDataByMany("Task", {
                     user: {
                         id: userId,
@@ -53,13 +53,14 @@ const handler = async (req, res) => {
 
                 // Request body'nin id olup olmadığını kontrol eder
                 if (typeof body !== "string") {
+                    // Yeni task oluşturur
                     const data = await createNewData("Task", body);
                     if (!data || data.error) {
                         throw new Error(data.error);
                     }
                     return res.status(200).json({ status: "success", message: "api isteği başarılı" });
                 }
-
+                // Requestteki id ile eşleşen task için database'e quety yapar 
                 try {
                     const data = await getDataByUnique("Task", {
                         id: body,

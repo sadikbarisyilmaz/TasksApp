@@ -8,17 +8,20 @@ import { categorizeByPriority } from "@/functions/categorizeByPriority";
 export const TaskTable = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     getAPI("/tasks").then((res) => {
       if (res.status && (res.status === 200 || res.status === "success")) {
         console.log(res);
       } else {
+        // Priority'e göre taskları kategorize ederek state'i set eder
         const categorizedTasks = categorizeByPriority(res);
         setTasks(categorizedTasks);
         setIsLoading(false);
       }
     });
   }, []);
+
   if (isLoading) {
     return (
       <div className="w-full h-full p-4 lg:p-8 bg-secondary-background shadow-inner flex justify-center items-center overflow-y-scroll">

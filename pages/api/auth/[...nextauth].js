@@ -15,6 +15,7 @@ export const authOptions = {
             authorize: async (credentials) => {
                 const email = credentials.email;
                 const password = credentials.password;
+                // Database'e user için email ile query yapar
                 const user = await postAPI("/users", email)
 
                 if (!user) {
@@ -22,7 +23,6 @@ export const authOptions = {
                 }
 
                 const isMatch = await bcrypt.compare(password, user.hashedPassword);
-
                 if (!isMatch) {
                     throw new Error("Password does not match");
                 }

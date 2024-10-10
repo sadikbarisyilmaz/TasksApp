@@ -47,6 +47,7 @@ export const SignupForm = () => {
       };
       postAPI("/users", credentials).then((res) => {
         if (res.status && (res.status === 200 || res.status === "success")) {
+          // Sanckbarı aktive eder
           setMessage("Account created successfully !");
           setOpen(true);
           setTimeout(() => {

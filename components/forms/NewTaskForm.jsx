@@ -48,10 +48,12 @@ export const NewTaskForm = () => {
       };
       postAPI("/tasks", newTask).then((res) => {
         if (res.status && (res.status === 200 || res.status === "success")) {
+          // Sanckbarı aktive eder
           setMessage("New task created successfully !");
           setOpen(true);
           resetForm();
         } else {
+          // Sanckbarı aktive eder
           setMessage(res);
           setOpen(true);
         }
