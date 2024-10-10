@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Button, Divider, TextField } from "@mui/material";
+import { Button, Divider, Snackbar, TextField } from "@mui/material";
 import Link from "next/link";
 import { handleLogin } from "@/functions/handleLogin";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,10 @@ const validationSchema = yup.object({
 });
 
 export const LoginForm = () => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -27,12 +31,20 @@ export const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setIsSubmitting(true);
       const { email, password } = values;
-      const result = await handleLogin(email, password);
-      if (result.error === null) {
-        router.push("/dashboard");
+      const res = await handleLogin(email, password);
+      if (res.error === null) {
+        setOpen(true);
+        setIsSubmitting(false);
+        setMessage("Login successfull !");
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 500);
       } else {
-        console.log(result.error);
+        setIsSubmitting(false);
+        setMessage(res.error);
+        setOpen(true);
       }
     },
   });
@@ -65,9 +77,15 @@ export const LoginForm = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <Button color="primary" variant="contained" fullWidth type="submit">
-          Submit
-        </Button>
+        {isSubmitting ? (
+          <Button color="primary" variant="contained" fullWidth disabled>
+            Submitting
+          </Button>
+        ) : (
+          <Button color="primary" variant="contained" fullWidth type="submit">
+            Submit
+          </Button>
+        )}
       </form>
       <p className="text-sm text-end">
         Don&apos;t have an account ?{" "}
@@ -79,6 +97,13 @@ export const LoginForm = () => {
         </Link>{" "}
         here!{" "}
       </p>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={open}
+        onClose={() => setOpen(false)}
+        autoHideDuration={2000}
+        message={message}
+      />
     </div>
   );
 };

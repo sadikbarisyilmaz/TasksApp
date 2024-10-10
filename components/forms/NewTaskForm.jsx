@@ -28,6 +28,7 @@ const validationSchema = yup.object({
 export const NewTaskForm = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+
   const { data: session, status } = useSession();
   const userId = session?.user.id;
 
