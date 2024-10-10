@@ -3,15 +3,17 @@ import { Banner } from "@/components/Banner";
 import { UpdateTaskForm } from "@/components/forms/UpdateTaskForm";
 import { postAPI } from "@/services/fetchAPI";
 import { Button } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }) {
+  const router = useRouter();
   const id = params.id;
   const handleDelete = () => {
     postAPI("/tasks", id, "DELETE").then((res) => {
       if (res.status && (res.status === 200 || res.status === "success")) {
-        console.log(res);
+        router.push("/dashboard");
       } else {
-        console.log(res);
+        router.push("/dashboard");
       }
     });
   };

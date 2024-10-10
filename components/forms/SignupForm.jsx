@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Button, Divider, TextField } from "@mui/material";
+import { Button, Divider, Snackbar, TextField } from "@mui/material";
 import Link from "next/link";
 import { postAPI } from "@/services/fetchAPI";
+import { useRouter } from "next/navigation";
 
 const validationSchema = yup.object({
   fullname: yup
@@ -26,6 +27,10 @@ const validationSchema = yup.object({
 });
 
 export const SignupForm = () => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       fullname: "",
@@ -42,9 +47,13 @@ export const SignupForm = () => {
       };
       postAPI("/users", credentials).then((res) => {
         if (res.status && (res.status === 200 || res.status === "success")) {
-          console.log(res.status);
+          setMessage("Account created successfully !");
+          setOpen(true);
+          setTimeout(() => {
+            router.push("/login");
+          }, 1500);
         } else {
-          console.log(res.status);
+          console.log(res);
         }
       });
     },
@@ -119,6 +128,13 @@ export const SignupForm = () => {
         </Link>{" "}
         here!{" "}
       </p>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={open}
+        onClose={() => setOpen(false)}
+        autoHideDuration={2000}
+        message={message}
+      />
     </div>
   );
 };

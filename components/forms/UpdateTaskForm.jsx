@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Button, Divider, TextField } from "@mui/material";
+import { Button, Divider, Snackbar, TextField } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -25,6 +25,8 @@ const validationSchema = yup.object({
 });
 
 export const UpdateTaskForm = ({ id }) => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const [task, setTask] = useState({
     title: "",
     priority: "casual",
@@ -56,7 +58,11 @@ export const UpdateTaskForm = ({ id }) => {
       postAPI("/tasks", updatedTask, "PUT").then((res) => {
         if (res.status && (res.status === 200 || res.status === "success")) {
           console.log(res);
+          setMessage(res);
+          setOpen(true);
         } else {
+          setMessage("Task updated created successfully !");
+          setOpen(true);
           console.log(res);
         }
       });
@@ -129,6 +135,13 @@ export const UpdateTaskForm = ({ id }) => {
           Submit
         </Button>
       </form>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={open}
+        onClose={() => setOpen(false)}
+        autoHideDuration={2000}
+        message={message}
+      />
     </div>
   );
 };

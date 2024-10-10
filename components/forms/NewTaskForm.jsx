@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Button, Divider, TextField } from "@mui/material";
+import { Button, Divider, Snackbar, TextField } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -26,6 +26,8 @@ const validationSchema = yup.object({
 });
 
 export const NewTaskForm = () => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const { data: session, status } = useSession();
   const userId = session?.user.id;
 
@@ -36,7 +38,7 @@ export const NewTaskForm = () => {
       priority: "casual",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       const newTask = {
         ...values,
         user: {
@@ -45,9 +47,12 @@ export const NewTaskForm = () => {
       };
       postAPI("/tasks", newTask).then((res) => {
         if (res.status && (res.status === 200 || res.status === "success")) {
-          console.log(res);
+          setMessage("New task created successfully !");
+          setOpen(true);
+          resetForm();
         } else {
-          console.log(res);
+          setMessage(res);
+          setOpen(true);
         }
       });
     },
@@ -112,6 +117,13 @@ export const NewTaskForm = () => {
           Submit
         </Button>
       </form>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={open}
+        onClose={() => setOpen(false)}
+        autoHideDuration={2000}
+        message={message}
+      />
     </div>
   );
 };

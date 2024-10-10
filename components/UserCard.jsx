@@ -22,7 +22,7 @@ export const UserCard = () => {
     <div className="flex flex-col gap-3 w-full p-2">
       <div className="flex gap-3">
         <Avatar sx={{ width: 44, height: 44 }}>
-          <p className="text-sm">{session?.user.name[0]}</p>
+          <p className="text-sm">{session?.user.name[0].toUpperCase()}</p>
         </Avatar>
         <div className="flex flex-col mt-1 leading-tight">
           <h3 className="flex font-normal">{session?.user.name}</h3>
