@@ -1,21 +1,21 @@
 "use client";
 import { Banner } from "@/components/Banner";
 import { UpdateTaskForm } from "@/components/forms/UpdateTaskForm";
-import { postAPI } from "@/services/fetchAPI";
+import { useTasksStore } from "@/stores/tasksStore";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function Page({ params }) {
   const router = useRouter();
   const id = params.id;
+  const deleteTasks = useTasksStore((state) => state.deleteTasks);
   const handleDelete = () => {
-    postAPI("/tasks", id, "DELETE").then((res) => {
-      if (res.status && (res.status === 200 || res.status === "success")) {
-        router.push("/dashboard");
-      } else {
-        router.push("/dashboard");
-      }
-    });
+    try {
+      deleteTasks(id);
+      router.push("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
