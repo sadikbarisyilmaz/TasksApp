@@ -9,6 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { postAPI } from "@/services/fetchAPI";
+import { useTasksStore } from "@/stores/tasksStore";
 
 const validationSchema = yup.object({
   title: yup
@@ -33,6 +34,7 @@ export const UpdateTaskForm = ({ id }) => {
     body: "",
   });
 
+  const updateTask = useTasksStore((state) => state.updateTask);
   useEffect(() => {
     postAPI("/tasks", id).then((res) => {
       if (res.status && (res.status === 200 || res.status === "success")) {
@@ -51,21 +53,18 @@ export const UpdateTaskForm = ({ id }) => {
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
+
     onSubmit: (values) => {
       const updatedTask = { ...values, id: id };
-      console.log(updatedTask);
-
-      postAPI("/tasks", updatedTask, "PUT").then((res) => {
-        if (res.status && (res.status === 200 || res.status === "success")) {
-          // Sanckbarı aktive eder
-          setMessage(res);
-          setOpen(true);
-        } else {
-          // Sanckbarı aktive eder
-          setMessage("Task updated created successfully !");
-          setOpen(true);
-        }
-      });
+      try {
+        updateTask(updatedTask);
+        //  Sanckbarı aktive eder
+        setMessage("Task updated created successfully !");
+        setOpen(true);
+      } catch (error) {
+        //  Sanckbarı aktive eder
+        setMessage(error.message);
+      }
     },
   });
 

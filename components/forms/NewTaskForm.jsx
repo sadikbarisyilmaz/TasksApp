@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { postAPI } from "@/services/fetchAPI";
 import { useSession } from "next-auth/react";
+import { useTasksStore } from "@/stores/tasksStore";
 
 const validationSchema = yup.object({
   title: yup
@@ -28,7 +29,7 @@ const validationSchema = yup.object({
 export const NewTaskForm = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-
+  const createTask = useTasksStore((state) => state.createTask);
   const { data: session, status } = useSession();
   const userId = session?.user.id;
 
@@ -46,18 +47,17 @@ export const NewTaskForm = () => {
           connect: { id: userId },
         },
       };
-      postAPI("/tasks", newTask).then((res) => {
-        if (res.status && (res.status === 200 || res.status === "success")) {
-          // Sanckbarı aktive eder
-          setMessage("New task created successfully !");
-          setOpen(true);
-          resetForm();
-        } else {
-          // Sanckbarı aktive eder
-          setMessage(res);
-          setOpen(true);
-        }
-      });
+      try {
+        createTask(newTask);
+        //  Sanckbarı aktive eder
+        setMessage("New task created successfully !");
+        setOpen(true);
+        resetForm();
+      } catch (error) {
+        //  Sanckbarı aktive eder
+        setMessage(error);
+        setOpen(true);
+      }
     },
   });
 
